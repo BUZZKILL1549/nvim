@@ -13,6 +13,4 @@ vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
   { import = 'plugins' },
-  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
-  { "nvim-lualine/lualine.nvim", config = function() require('plugins.lualine') end },
 })
