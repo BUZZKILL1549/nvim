@@ -8,10 +8,15 @@ return {
     "L3MON4D3/LuaSnip",       -- Snippet engine
     "saadparwaiz1/cmp_luasnip", -- Snippet completions
     "rafamadriz/friendly-snippets", -- Predefined snippets
+    "windwp/nvim-autopairs"
   },
   config = function()
     local cmp = require("cmp")
     local luasnip = require("luasnip")
+
+    -- for nvim-autopairs
+    local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+    cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 
     -- Load predefined snippets
     require("luasnip.loaders.from_vscode").lazy_load()
