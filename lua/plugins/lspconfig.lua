@@ -5,13 +5,25 @@ return {
 		local lspconfig = require("lspconfig")
 
 		-- Python
-    lspconfig.ruff.setup({
+    lspconfig.pylsp.setup({
+      plugins = {
+        ruff = { enabled = true, extendSelect = { "E", "F", "W" }},
+        black = { enabled = true },
+        isort = { enabled = true },
+      },
       settings = {
-        args = {}
-      }
+        pylsp = {
+          plugins = {
+            ruff = { enabled = true },
+            black = { enabled = true },
+            isort = { enabled = true },
+            mypy = { enabled = true },
+          },
+        },
+      },
     })
 
-		-- C/C++
+    -- C/C++
 		lspconfig.clangd.setup({
 			cmd = { "clangd", "--background-index", "--clang-tidy" },
 		})
