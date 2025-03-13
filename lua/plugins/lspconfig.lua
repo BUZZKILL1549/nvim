@@ -15,8 +15,7 @@ return {
         pylsp = {
           plugins = {
             ruff = { enabled = true },
-            black = { enabled = true },
-            isort = { enabled = true },
+            black = { enabled = true }, isort = { enabled = true },
             mypy = { enabled = true },
           },
         },
@@ -38,6 +37,12 @@ return {
       end,
       settings = {
 				["rust-analyzer"] = {
+          assist = {
+            importMergeBehaviour = "full",
+            importPrefix = "by_crate",
+          },
+          procMacro = { enable = true },
+          rustfmt = { enable = true },
 					checkOnSave = { command = "clippy" },
 					cargo = { allFeatures = true },
 				},
@@ -75,6 +80,18 @@ return {
 		-- Svelte & TailwindCSS (for frontend development)
 		lspconfig.svelte.setup({})
 		lspconfig.tailwindcss.setup({})
+
+    -- JavaScript/TypeScript (tsserver)
+    -- this will need to have typescript shit installed as well
+    -- npm install -g typescript typescript-language-server
+    lspconfig.ts_ls.setup({
+      on_attach = function (client, bufnr)
+        local opts = { buffer = bufnr }
+        vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+        vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+        vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, opts)
+      end,
+    })
 
 		-- Global diagnostics keymaps
 		vim.keymap.set("n", "<leader>dp", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })

@@ -14,11 +14,19 @@ vim.api.nvim_set_keymap('v', '<leader>y', '"+y', { noremap = true, silent = true
 vim.api.nvim_set_keymap('n', '<leader>p', '"+p', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<leader>p', '"+p', { noremap = true, silent = true })
 
--- autoformat on save
+-- autoformat on save (python)
 vim.api.nvim_create_autocmd("BufWritePost", {
   pattern = "*.py",
   callback = function()
     vim.lsp.buf.format({ async = true })
     vim.cmd("silent! !isort " .. vim.fn.expand("%"))
+  end,
+})
+
+-- autoformat on save (rust)
+vim.api.nvim_create_autocmd("BufWritePost", {
+  pattern = "*.rs",
+  callback = function()
+    vim.lsp.buf.format({ async = true })
   end,
 })
