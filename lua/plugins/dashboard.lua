@@ -43,12 +43,25 @@ return {
         footer = center_text({ "" }),
       },
     })
-
-    -- Make the dashboard menu text larger and bold
+    
+    -- Use pywal colors for dashboard
+    local colors = vim.g.colors_name == "pywal" and {
+      header = "${color4}", 
+      center = "${color3}", 
+      footer = "${color2}" 
+    } or {
+      header = "#89b4fa", -- if not using pywal
+      center = "#fab387",
+      footer = "#a6e3a1"
+    }
+    
     vim.cmd([[
-      hi DashboardCenter guifg=#fab387 guibg=NONE gui=bold
-      hi DashboardHeader guifg=#89b4fa guibg=NONE gui=bold
-      hi DashboardFooter guifg=#a6e3a1 guibg=NONE gui=italic
+      if filereadable(expand('~/.cache/wal/colors-wal.vim'))
+        source ~/.cache/wal/colors-wal.vim
+        hi DashboardHeader guifg=color4 guibg=NONE gui=bold
+        hi DashboardCenter guifg=color3 guibg=NONE gui=bold
+        hi DashboardFooter guifg=color2 guibg=NONE gui=italic
+      endif
     ]])
   end,
 }
